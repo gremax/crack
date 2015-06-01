@@ -1,3 +1,22 @@
 h1 {
   text-align: center;
+  text-transform: uppercase;
+}
+.code {
+  font-size: 70px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 70px
+  margin-bottom: 20px;
+}
+table {
+  margin-top: 20px;
+}
+.buttons {
+  text-align: center;
+}
+.hint {
+  font-size: 50px;
+  font-weight: bold;
+  text-align: center;
 }

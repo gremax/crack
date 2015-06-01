@@ -1,1 +1,43 @@
-Welcome to Codebreaker!
+<% if @error %>
+  <div class="alert alert-danger" role="alert"><b>Oops!</b> <%= @error %></div>
+<% end %>
+<div class="code">
+<%= guesses.last[1] unless guesses.empty? %>
+</div>
+<div class="row">
+  <form action="/submit" method="post">
+    <div class="input-group col-md-6 col-md-offset-3">
+      <input type="text" class="form-control" placeholder="Guess code" name="user_guess" value="<%= guesses.last[0] unless guesses.empty? %>">
+      <span class="input-group-btn">
+        <input class="btn btn-primary" type="submit" value="Submit!">
+      </span>
+    </div>
+  </form>
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Guess</th>
+      <th>Match</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% guesses.each do |g| %>
+    <tr>
+      <td><%= g[0] %></td>
+      <td><%= g[1] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<div class="buttons">
+  <a href="/start" class="btn btn-sm btn-success">Start new game</a>
+  <a href="/hint" class="btn btn-sm btn-info">Hint</a>
+</div>
+<div class="hint">
+  <b></b>
+</div>
+
+<!-- secret code: <%= game.instance_variable_get(:@secret_code) %> -->
