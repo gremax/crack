@@ -14,9 +14,18 @@
       <h1>Codebreaker</h1>
       <div class="row">
         <div class="col-md-4 col-md-offset-4">
+          <% if @msg %>
+            <div class="alert alert-<%= @msg[0] %> alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <%= @msg[1] %>
+            </div>
+          <% end %>
           <%= yield %>
         </div>
       </div>
     </div>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script src="/javascripts/application.js"></script>
   </body>
 </html>

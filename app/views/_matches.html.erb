@@ -1,0 +1,16 @@
+<table class="table table-hover matches">
+  <thead>
+    <tr>
+      <th>Guess</th>
+      <th>Match</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% matches.each do |g| %>
+    <tr>
+      <td><%= g[0] %></td>
+      <td><%= g[1] %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

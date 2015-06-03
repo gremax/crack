@@ -1,7 +1,8 @@
 require 'codebreaker'
+require 'erb'
+include ERB::Util
 
 class Application
-  attr_reader :hint
   def self.call(env)
     new(env).response.finish
   end
@@ -12,53 +13,89 @@ class Application
 
   def response
     case @request.path
-    when "/" then Rack::Response.new(render("index"))
-    when "/start"
-      game.start
-      @request.session[:guesses] = []
-      Rack::Response.new do |response|
-        response.redirect("/")
-      end
-    when "/hint"
-      Rack::Response.new do |response|
-        response.redirect("/")
-      end
-    when "/submit"
-      begin
-        guesses << [@request.params["user_guess"], game.submit(@request.params["user_guess"].strip)]
-        Rack::Response.new do |response|
-          response.redirect("/")
-        end
-      rescue => e
-        @error = e
-        Rack::Response.new(render("index"))
-      end
+    when "/"       then index
+    when "/start"  then start
+    when "/scores" then scores
+    when "/submit" then submit
     else Rack::Response.new("Not Found", 404)
     end
   end
 
-  def render(view)
-    render_template('layouts/application') do
-      render_template(view)
+  def index
+    Rack::Response.new(render("index"))
+  end
+
+  def start
+    game.start
+    @request.session[:matches] = []
+    Rack::Response.new(render("index"))
+  end
+
+  def scores
+    if @request.post?
+      begin
+        username = html_escape(@request.params["username"].strip)
+        game.save(username, SCORES)
+        Rack::Response.new(message(:info, "Thanks, #{username}! Your score has been saved!"))
+        Rack::Response.new(render("scores"))
+      rescue => e
+        Rack::Response.new(message(:danger, e))
+        Rack::Response.new(render("save"))
+      end
+    else
+      Rack::Response.new(render("scores"))
     end
+  end
+
+  def submit
+    guess = html_escape(@request.params["user_guess"].strip)
+    matches << [guess, game.submit(guess)]
+    if matches.last[1].eql?("++++")
+      Rack::Response.new(message(:success, "Congratulations! You won!"))
+      Rack::Response.new(render("save"))
+    elsif matches.last[1].eql?("Game over")
+      Rack::Response.new(message(:warning, "Sorry! You lose!"))
+      Rack::Response.new(render("save"))
+    else
+      Rack::Response.new do |response|
+        response.redirect("/")
+      end
+    end
+  rescue => e
+    Rack::Response.new(message(:danger, e))
+    Rack::Response.new(render("index"))
+  end
+
+  def render(view)
+    render_template('layouts/application') { render_template(view) }
   end
 
   def render_template(path, &block)
     template = File.expand_path("../../app/views/#{path}.html.erb", __FILE__)
-    ERB.new(File.read(template)).result(get_binding &block)
+    ERB.new(File.read(template)).result(binding &block)
   end
 
-  private
-
-  def get_binding
-    binding
+  def hint
+    game.hint
+  rescue
+    ""
   end
 
-  def guesses
-    @request.session[:guesses] ||= []
+  def load_scores
+    game.scores(SCORES)
+  rescue
+    []
+  end
+
+  def matches
+    @request.session[:matches] ||= []
   end
 
   def game
     @request.session[:codebreaker] ||= Codebreaker::Game.new
+  end
+
+  def message(type, msg)
+    @msg = [type, msg]
   end
 end

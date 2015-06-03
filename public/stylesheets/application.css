@@ -11,6 +11,14 @@ h1 {
 }
 table {
   margin-top: 20px;
+  font-size: 18px;
+}
+.matches th:nth-child(odd),
+.matches td:nth-child(odd) {
+  text-align: right;
+}
+tr:nth-child(even) {
+  background-color: #f5f5f5;
 }
 .buttons {
   text-align: center;
@@ -19,4 +27,7 @@ table {
   font-size: 50px;
   font-weight: bold;
   text-align: center;
+}
+.hint-hide {
+  display: none;
 }

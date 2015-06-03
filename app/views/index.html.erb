@@ -1,43 +1,19 @@
-<% if @error %>
-  <div class="alert alert-danger" role="alert"><b>Oops!</b> <%= @error %></div>
-<% end %>
 <div class="code">
-<%= guesses.last[1] unless guesses.empty? %>
-</div>
-<div class="row">
-  <form action="/submit" method="post">
-    <div class="input-group col-md-6 col-md-offset-3">
-      <input type="text" class="form-control" placeholder="Guess code" name="user_guess" value="<%= guesses.last[0] unless guesses.empty? %>">
-      <span class="input-group-btn">
-        <input class="btn btn-primary" type="submit" value="Submit!">
-      </span>
-    </div>
-  </form>
+  <%= matches.last[1] unless matches.empty? %>
 </div>
 
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Guess</th>
-      <th>Match</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% guesses.each do |g| %>
-    <tr>
-      <td><%= g[0] %></td>
-      <td><%= g[1] %></td>
-    </tr>
-  <% end %>
-  </tbody>
-</table>
+<%= render_template('_form') %>
+<%= render_template('_matches') %>
 
 <div class="buttons">
-  <a href="/start" class="btn btn-sm btn-success">Start new game</a>
-  <a href="/hint" class="btn btn-sm btn-info">Hint</a>
+  <a href="/start" class="btn btn-success">Start new game</a>
+  <a href="/scores" class="btn btn-success">Scores</a>
+  <button class="btn btn-info" <%= "disabled" if hint.empty? %>>Hint</button>
 </div>
-<div class="hint">
-  <b></b>
+<div class="hint hint-hide">
+  <b><%= hint %></b>
 </div>
 
 <!-- secret code: <%= game.instance_variable_get(:@secret_code) %> -->
+
+<%=  %>

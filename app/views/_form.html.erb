@@ -1,0 +1,10 @@
+<div class="row">
+  <form action="/submit" method="post">
+    <div class="input-group col-md-8 col-md-offset-2">
+      <input type="text" class="form-control input-lg" placeholder="Guess code" name="user_guess" value="<%= matches.last[0] unless matches.empty? %>">
+      <span class="input-group-btn">
+        <button class="btn btn-primary input-lg" type="submit">Submit!</button>
+      </span>
+    </div>
+  </form>
+</div>
