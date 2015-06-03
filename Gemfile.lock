@@ -1,0 +1,19 @@
+GIT
+  remote: git://github.com/gremax/codebreaker.git
+  revision: 4c80a246c08f71efa86cdcc6b55fbddb1564bd2e
+  specs:
+    codebreaker (0.1.2)
+      colorize (~> 0.7)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    colorize (0.7.7)
+    rack (1.6.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  codebreaker!
+  rack
