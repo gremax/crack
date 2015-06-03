@@ -82,7 +82,8 @@ class Application
   end
 
   def load_scores
-    game.scores(SCORES)
+    scores = game.scores(SCORES)
+    scores.sort { |a,b| a.finish_at - a.start_at <=> b.finish_at - b.start_at }
   rescue
     []
   end

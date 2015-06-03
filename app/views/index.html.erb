@@ -3,11 +3,12 @@
 </div>
 
 <%= render_template('_form') %>
-<%= render_template('_matches') %>
+<%= render_template('_matches') unless matches.empty? %>
 
 <div class="buttons">
   <a href="/start" class="btn btn-success">Start new game</a>
   <a href="/scores" class="btn btn-success">Scores</a>
+  <button class="btn btn-success" type="button" data-toggle="modal" data-target="#about">?</button>
   <button class="btn btn-info" <%= "disabled" if hint.empty? %>>Hint</button>
 </div>
 <div class="hint hint-hide">
@@ -15,5 +16,3 @@
 </div>
 
 <!-- secret code: <%= game.instance_variable_get(:@secret_code) %> -->
-
-<%=  %>
