@@ -36,10 +36,10 @@ class Application
       begin
         username = html_escape(@request.params["username"].strip)
         game.save(username, SCORES)
-        Rack::Response.new(message(:info, "Thanks, #{username}! Your score has been saved!"))
+        message :info, "Thanks, #{username}! Your score has been saved!"
         Rack::Response.new(render("scores"))
       rescue => e
-        Rack::Response.new(message(:danger, e))
+        message :danger, e
         Rack::Response.new(render("save"))
       end
     else
@@ -51,10 +51,10 @@ class Application
     guess = html_escape(@request.params["user_guess"].strip)
     matches << [guess, game.submit(guess)]
     if matches.last[1].eql?("++++")
-      Rack::Response.new(message(:success, "Congratulations! You won!"))
+      message :success, "Congratulations! You won!"
       Rack::Response.new(render("save"))
     elsif matches.last[1].eql?("Game over")
-      Rack::Response.new(message(:warning, "Sorry! You lose!"))
+      message :warning, "Sorry! You lose!"
       Rack::Response.new(render("save"))
     else
       Rack::Response.new do |response|
@@ -62,7 +62,7 @@ class Application
       end
     end
   rescue => e
-    Rack::Response.new(message(:danger, e))
+    message :danger, e
     Rack::Response.new(render("index"))
   end
 

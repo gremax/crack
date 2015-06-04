@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/gremax/codebreaker.git
-  revision: 4c80a246c08f71efa86cdcc6b55fbddb1564bd2e
+  revision: 710b771c0209f8777af062bf3c239366eefabbde
   specs:
-    codebreaker (0.1.2)
+    codebreaker (0.1.3)
       colorize (~> 0.7)
 
 GEM
